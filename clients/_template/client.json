@@ -1,0 +1,27 @@
+{
+  "slug": "_template",
+  "name": "Client name",
+  "website": "https://example.com",
+  "industry": "e.g. home services",
+  "country": "GB",
+  "currency": "GBP",
+  "stage": "growing",
+  "audience": "Who buys from this client, in one sentence",
+  "core_promise": "What the client promises customers, in one sentence",
+  "proof_points": [],
+  "competitors": [],
+  "compliance_notes": [],
+  "contact": {
+    "name": "",
+    "email": ""
+  },
+  "branding": {
+    "primary_color": "#1f3a5f",
+    "logo": null
+  },
+  "engagement": {
+    "relationship": "client",
+    "offer": "ad-waste-audit",
+    "status": "prospect"
+  }
+}

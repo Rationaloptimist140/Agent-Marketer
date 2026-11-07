@@ -21,7 +21,7 @@ Status: `scaffolded` = code exists in this repo · `spec` = designed, not yet bu
 
 ## 1. Autonomous Paid Media Agent
 - **Goal:** move budget toward what works and stop waste quickly, within hard limits.
-- **Inputs:** daily ad-level metrics (spend, impressions, clicks, conversions) from Meta / Google Ads; `config/budgets.json`.
+- **Inputs:** daily ad-level metrics (spend, impressions, clicks, conversions) from Meta / Google Ads; the client's `clients/<slug>/budgets.json`.
 - **Output:** a ranked list of proposed actions (PAUSE / SCALE / HOLD / REFRESH_CREATIVE), each with a reason, logged to the decision log. Approved actions are applied via the ads API or browser.
 - **MVP:** deterministic rules engine (built) → a weekly human-approved run → optionally auto-pause only.
 - **Success metric:** blended cost per acquisition (CPA) against target; share of spend on ads that meet target.

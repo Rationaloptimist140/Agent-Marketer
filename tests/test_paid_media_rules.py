@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 
 import pytest
 
-from scripts import decision_log
+from scripts import clients, decision_log
 from scripts.paid_media_rules import AdMetrics, BudgetConfig, main, propose
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 CFG = BudgetConfig(
     currency="£",
@@ -90,21 +93,46 @@ def test_config_rejects_bad_values(tmp_path: Path):
         BudgetConfig.load(path)
 
 
-def test_cli_logs_non_hold_proposals(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+METRICS_CSV = (
+    "ad_id,ad_name,daily_budget,spend,impressions,clicks,conversions,days_running\n"
+    "a,Ad A,20,60,5000,100,0,5\n"
+    "b,Ad B,20,10,500,10,0,1\n"
+)
+
+
+def test_cli_with_explicit_config_logs_to_default_log(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     monkeypatch.chdir(tmp_path)
-    metrics = tmp_path / "m.csv"
-    metrics.write_text(
-        "ad_id,ad_name,daily_budget,spend,impressions,clicks,conversions,days_running\n"
-        "a,Ad A,20,60,5000,100,0,5\n"
-        "b,Ad B,20,10,500,10,0,1\n"
-    )
-    cfg_path = tmp_path / "budgets.json"
-    cfg_path.write_text(json.dumps(CFG.__dict__))
-    assert main([str(metrics), str(cfg_path), "--log", "--brand", "QuantaRoute"]) == 0
+    (tmp_path / "m.csv").write_text(METRICS_CSV)
+    (tmp_path / "budgets.json").write_text(json.dumps(CFG.__dict__))
+    assert main(["m.csv", "--config", "budgets.json", "--log"]) == 0
     records = list(decision_log.read(tmp_path / "logs" / "decisions.jsonl"))
     assert [r["action"] for r in records] == ["PAUSE"]
-    assert records[0]["brand"] == "QuantaRoute"
+    assert records[0]["client"] is None
     assert records[0]["status"] == "proposed"
+
+
+def test_cli_with_client_uses_client_budgets_currency_and_isolated_log(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.chdir(tmp_path)
+    shutil.copytree(REPO_ROOT / "clients" / "_template", tmp_path / "clients" / "_template")
+    clients.create("acme", "Acme Ltd")
+    (tmp_path / "m.csv").write_text(METRICS_CSV)
+    assert main(["m.csv", "--client", "acme", "--log"]) == 0
+    records = list(decision_log.read(tmp_path / "clients" / "acme" / "logs" / "decisions.jsonl"))
+    assert [r["client"] for r in records] == ["acme"]
+    assert "£" in records[0]["reasoning"]
+    assert not (tmp_path / "logs" / "decisions.jsonl").exists()
+
+
+def test_cli_requires_client_or_config(tmp_path: Path):
+    with pytest.raises(SystemExit):
+        main([str(tmp_path / "m.csv")])
+
+
+def test_budget_config_reports_missing_fields(tmp_path: Path):
+    path = tmp_path / "budgets.json"
+    path.write_text(json.dumps({"daily_cap": 10}))
+    with pytest.raises(ValueError, match="missing budget fields"):
+        BudgetConfig.load(path, currency="£")
 
 
 def test_decision_log_blocks_unapproved_execution():
