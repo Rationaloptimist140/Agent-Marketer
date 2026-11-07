@@ -1,0 +1,12 @@
+{
+  "daily_cap": 120.0,
+  "monthly_cap": 3600.0,
+  "target_cpa": 18.0,
+  "min_spend_to_judge": 40.0,
+  "min_conversions_to_scale": 3,
+  "pause_cpa_multiple": 1.5,
+  "scale_cpa_multiple": 0.7,
+  "scale_step_pct": 20.0,
+  "min_days_running": 3,
+  "auto_pause_enabled": false
+}

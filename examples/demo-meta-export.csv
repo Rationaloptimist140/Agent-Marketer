@@ -1,0 +1,11 @@
+Reporting starts,Reporting ends,Campaign name,Ad set name,Ad name,Ad delivery,Results,Result indicator,Impressions,Link clicks,Amount spent (GBP),Cost per result
+2026-10-01,2026-10-30,Prospecting - Broad,UK 25-54,Subscription - Never run out of beans,active,41,actions:offsite_conversion.fb_pixel_purchase,48210,1012,452.18,11.03
+2026-10-01,2026-10-30,Prospecting - Broad,UK 25-54,Roast date on every bag (UGC),active,29,actions:offsite_conversion.fb_pixel_purchase,39880,861,371.40,12.81
+2026-10-01,2026-10-30,Prospecting - Broad,UK 25-54,Free grinder giveaway,active,0,actions:offsite_conversion.fb_pixel_purchase,61340,377,418.75,
+2026-10-01,2026-10-30,Prospecting - Interests,Coffee enthusiasts,Brand story - our roastery,active,2,actions:offsite_conversion.fb_pixel_purchase,52120,301,296.60,148.30
+2026-10-01,2026-10-30,Prospecting - Interests,Coffee enthusiasts,Carousel - 6 origins,active,14,actions:offsite_conversion.fb_pixel_purchase,30410,598,279.95,20.00
+2026-10-01,2026-10-30,Retargeting,Site visitors 30d,10% off your first bag,active,22,actions:offsite_conversion.fb_pixel_purchase,18050,644,231.20,10.51
+2026-10-01,2026-10-30,Retargeting,Cart abandoners,You left something behind,active,6,actions:offsite_conversion.fb_pixel_purchase,9020,212,163.30,27.22
+2026-10-01,2026-10-30,Prospecting - Lookalike,LAL 1% purchasers,Barista tips video,active,0,actions:offsite_conversion.fb_pixel_purchase,44700,236,262.40,
+2026-10-01,2026-10-30,Prospecting - Lookalike,LAL 1% purchasers,Decaf that tastes like coffee,active,7,actions:offsite_conversion.fb_pixel_purchase,21400,402,140.70,20.10
+2026-10-01,2026-10-30,Prospecting - Broad,UK 25-54,Gift subscriptions (new),active,1,actions:offsite_conversion.fb_pixel_purchase,4120,61,28.50,28.50
