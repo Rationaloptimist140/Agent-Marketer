@@ -1,0 +1,29 @@
+{
+  "slug": "demo-coffee-roasters",
+  "name": "Northfield Coffee Roasters",
+  "website": "https://example.com",
+  "industry": "Ecommerce (specialty coffee)",
+  "country": "GB",
+  "currency": "GBP",
+  "stage": "growing",
+  "audience": "UK home coffee drinkers buying beans online",
+  "core_promise": "Freshly roasted beans delivered within 48 hours of roasting",
+  "proof_points": [],
+  "competitors": [],
+  "compliance_notes": [
+    "FICTIONAL DEMO CLIENT. Data is invented for sales demonstrations; never present it as a real case study."
+  ],
+  "contact": {
+    "name": "",
+    "email": ""
+  },
+  "branding": {
+    "primary_color": "#6b3e26",
+    "logo": null
+  },
+  "engagement": {
+    "relationship": "demo",
+    "offer": "ad-waste-audit",
+    "status": "completed"
+  }
+}

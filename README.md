@@ -12,6 +12,10 @@ A done-for-you AI marketing service, run by Crewlet. Clients send their data; Ag
 | `PILLARS.md` | Spec and build status for each pillar |
 | `clients/` | One folder per engagement (`client.json` + `budgets.json`). `_template/` is the starting point |
 | `scripts/clients.py` | Create, list and validate clients |
+| `scripts/ad_waste_audit.py` | **Lead offer:** turns a Meta or Google Ads export into a branded, client-ready Ad Waste Audit (HTML + JSON) |
+| `scripts/importers.py` | Reads Meta Ads Manager, Google Ads and generic CSV exports into one shape |
+| `templates/ad_waste_audit.html` | Report design; edit freely without touching code |
+| `examples/` | Fictional demo export and the demo report it produces, for sales conversations |
 | `scripts/paid_media_rules.py` | Pillar 1: proposes PAUSE / SCALE / HOLD per ad, with hard daily caps enforced in code |
 | `scripts/seo_opportunities.py` | Pillar 2: ranks "shown but not clicked" Search Console queries into NEW_GUIDE / IMPROVE_PAGE |
 | `scripts/decision_log.py` | Append-only JSONL log of every proposed, approved and executed action |
@@ -27,8 +31,17 @@ python -m scripts.clients new acme-plumbing --name "Acme Plumbing"
 python -m scripts.clients validate
 
 # put their export in clients/acme-plumbing/data/ (git-ignored), then:
-python -m scripts.paid_media_rules clients/acme-plumbing/data/meta.csv --client acme-plumbing --log
+python -m scripts.ad_waste_audit clients/acme-plumbing/data/meta.csv --client acme-plumbing --log
+# → clients/acme-plumbing/reports/ad-waste-audit-YYYY-MM-DD.html (open it, print to PDF, send)
 ```
+
+## Ad Waste Audit
+
+- **Input:** an ad-level export from Meta Ads Manager (Amount spent, Impressions, Link clicks, Results, Reporting starts/ends) or Google Ads (Cost, Impr., Clicks, Conversions). Formatted numbers, title lines and total rows are handled. Pass `--days` if the export has no dates.
+- **Verdicts:** Pause (spend with zero conversions), Pause or fix (cost per conversion above `pause_cpa_multiple` × target), Scale with approval (well below target with enough conversions), Keep, Wait (below minimum spend).
+- **Headline figure:** avoidable spend = zero-conversion spend + spend above what expensive ads' conversions were worth at target. Monthly projection and reinvestment uplift are labelled as estimates.
+- **Approval checklist:** the client ticks what they want actioned. Nothing touches their ad account.
+- **Demo:** `python -m scripts.ad_waste_audit examples/demo-meta-export.csv --client demo-coffee-roasters` (fictional client; reports show a "fictional data" banner).
 
 Windows PowerShell: the same commands work; use `python -m pip install -e ".[dev]"` if `pip` is not on PATH.
 
