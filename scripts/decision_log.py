@@ -1,7 +1,8 @@
 """Append-only decision log for every automated marketing action.
 
 Each record answers: what was proposed, why, from which inputs, who approved it,
-and what happened. Records are JSON Lines so they can be grepped, diffed and
+and what happened. Client runs write to clients/<slug>/logs/decisions.jsonl so
+one client's history never mixes with another's. Records are JSON Lines so they can be grepped, diffed and
 loaded into a report without a database.
 """
 
@@ -26,7 +27,7 @@ class Decision:
     target: str
     reasoning: str
     status: str = "proposed"
-    brand: str | None = None
+    client: str | None = None
     inputs: dict[str, Any] = field(default_factory=dict)
     requires_approval: bool = True
     approved_by: str | None = None

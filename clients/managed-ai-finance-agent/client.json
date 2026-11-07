@@ -1,0 +1,29 @@
+{
+  "slug": "managed-ai-finance-agent",
+  "name": "Managed AI Finance Agent",
+  "website": "https://finance-agent-api-production.up.railway.app",
+  "industry": "Finance automation software",
+  "country": "GB",
+  "currency": "GBP",
+  "stage": "pre-traction",
+  "audience": "UK SMEs with recurring supplier invoices",
+  "core_promise": "Invoice email in, reviewed invoice register out, with humans approving anything uncertain",
+  "proof_points": [],
+  "competitors": [],
+  "compliance_notes": [
+    "Market only the Finance Agent; do not promote the Outreach or Data Entry agents."
+  ],
+  "contact": {
+    "name": "",
+    "email": ""
+  },
+  "branding": {
+    "primary_color": "#1d4ed8",
+    "logo": null
+  },
+  "engagement": {
+    "relationship": "own-product",
+    "offer": "internal",
+    "status": "paused"
+  }
+}

@@ -1,36 +1,40 @@
-# agent-marketer
+# Agent Marketer
 
-Autonomous marketing systems for Crewlet's products: guardrailed agents, rules engines and scheduled loops across 11 pillars, from paid media and SEO to tracking, lifecycle and incrementality.
+A done-for-you AI marketing service, run by Crewlet. Clients send their data; Agent Marketer turns it into clear reports and safe, approved actions, starting with the **Ad Waste Audit**.
 
-**The principle:** deterministic rules decide, LLMs draft and enrich, humans approve anything that spends money or goes public, and every automated decision is logged.
+**The principle:** deterministic rules decide, LLMs draft and enrich, humans approve anything that spends money or goes public, and every automated decision is logged per client.
 
 ## What's here
 
 | Path | What it is |
 |---|---|
-| `AGENT_PROMPT.md` | System prompt for the Agent Marketer (identity, 11 pillars, sequencing, guardrails) |
+| `AGENT_PROMPT.md` | System prompt: identity, the service, client separation, 11 pillars, guardrails |
 | `PILLARS.md` | Spec and build status for each pillar |
-| `scripts/decision_log.py` | Append-only JSONL log of every proposed/approved/executed action |
+| `clients/` | One folder per engagement (`client.json` + `budgets.json`). `_template/` is the starting point |
+| `scripts/clients.py` | Create, list and validate clients |
 | `scripts/paid_media_rules.py` | Pillar 1: proposes PAUSE / SCALE / HOLD per ad, with hard daily caps enforced in code |
 | `scripts/seo_opportunities.py` | Pillar 2: ranks "shown but not clicked" Search Console queries into NEW_GUIDE / IMPROVE_PAGE |
-| `config/*.example.json` | Budget limits and brand definitions; copy to `budgets.json` / `brands.json` (git-ignored) |
-| `tests/` | 15 tests covering caps, approval rules, logging and opportunity ranking |
+| `scripts/decision_log.py` | Append-only JSONL log of every proposed, approved and executed action |
+| `tests/` | Caps, approvals, client validation and isolation, logging, opportunity ranking |
 
-## Quick start
+## Onboarding a client
 
 ```bash
 pip install -e ".[dev]"
-pytest -q
 
-# Paid media: propose actions from an ad-level metrics export
-cp config/budgets.example.json config/budgets.json
-python -m scripts.paid_media_rules metrics.csv config/budgets.json --brand QuantaRoute --log
+python -m scripts.clients new acme-plumbing --name "Acme Plumbing"
+# edit clients/acme-plumbing/client.json and budgets.json
+python -m scripts.clients validate
 
-# SEO: rank opportunities from a Search Console export (Performance > Queries + Pages > Export)
-python -m scripts.seo_opportunities gsc_export.csv --top 10
+# put their export in clients/acme-plumbing/data/ (git-ignored), then:
+python -m scripts.paid_media_rules clients/acme-plumbing/data/meta.csv --client acme-plumbing --log
 ```
 
 Windows PowerShell: the same commands work; use `python -m pip install -e ".[dev]"` if `pip` is not on PATH.
+
+## Client data stays out of git
+
+`clients/*/data/`, `clients/*/reports/` and `clients/*/logs/` are git-ignored. Only each client's configuration is committed. Delete raw exports after delivery.
 
 ## Safety rules built into the code
 
@@ -39,7 +43,8 @@ Windows PowerShell: the same commands work; use `python -m pip install -e ".[dev
 - Pauses are auto-allowed only if `auto_pause_enabled` is set to `true`; it is off by default.
 - Nothing is judged before it reaches `min_spend_to_judge` and `min_days_running`.
 - The decision log refuses to record an action as `executed` if it needed approval and has no approver.
+- Each client's decisions are written to that client's own log.
 
-## Roadmap
+## Contributing
 
-See `PILLARS.md`. Suggested order for a pre-traction product: Voice-of-Customer → tracking → daily SEO loop → AI visibility audit → weekly report. Paid media comes once tracking is verified and a budget is approved.
+`main` is protected by convention: every change arrives as a PR from a feature branch and must pass CI (ruff + pytest).

@@ -5,7 +5,8 @@ calls an ads API itself. Anything that increases spend always requires approval;
 pauses can be auto-allowed only when the config explicitly enables it.
 
 Usage:
-    python -m scripts.paid_media_rules metrics.csv config/budgets.json [--log]
+    python -m scripts.paid_media_rules metrics.csv --client acme-plumbing [--log]
+    python -m scripts.paid_media_rules metrics.csv --config path/to/budgets.json
 
 metrics.csv columns: ad_id, ad_name, daily_budget, spend, impressions, clicks, conversions, days_running
 """
@@ -19,7 +20,7 @@ import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from scripts import decision_log
+from scripts import clients, decision_log
 
 
 @dataclass(frozen=True)
@@ -37,8 +38,14 @@ class BudgetConfig:
     auto_pause_enabled: bool
 
     @classmethod
-    def load(cls, path: Path) -> BudgetConfig:
+    def load(cls, path: Path, currency: str | None = None) -> BudgetConfig:
+        """Load thresholds. A client's currency symbol overrides any value in the file."""
         raw = json.loads(path.read_text(encoding="utf-8"))
+        if currency is not None:
+            raw["currency"] = currency
+        missing = [k for k in cls.__dataclass_fields__ if k not in raw]
+        if missing:
+            raise ValueError(f"{path}: missing budget fields {missing}")
         cfg = cls(**{k: raw[k] for k in cls.__dataclass_fields__})
         if cfg.daily_cap <= 0 or cfg.target_cpa <= 0:
             raise ValueError("daily_cap and target_cpa must be positive")
@@ -154,12 +161,20 @@ def propose(ads: list[AdMetrics], cfg: BudgetConfig) -> list[Proposal]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("metrics", type=Path)
-    parser.add_argument("config", type=Path)
-    parser.add_argument("--brand", default=None)
+    target = parser.add_mutually_exclusive_group(required=True)
+    target.add_argument("--client", help="client slug under clients/ (uses its budgets.json and decision log)")
+    target.add_argument("--config", type=Path, help="explicit budgets.json, for ad-hoc runs outside a client")
     parser.add_argument("--log", action="store_true", help="append proposals to the decision log")
     args = parser.parse_args(argv)
 
-    cfg = BudgetConfig.load(args.config)
+    if args.client:
+        client = clients.load(args.client)
+        cfg = BudgetConfig.load(client.budgets_path, currency=client.currency_symbol)
+        client_slug, log_path = client.slug, client.log_path
+    else:
+        cfg = BudgetConfig.load(args.config)
+        client_slug, log_path = None, decision_log.DEFAULT_LOG_PATH
+
     proposals = propose(load_metrics(args.metrics), cfg)
     for p in proposals:
         print(json.dumps(asdict(p), ensure_ascii=False))
@@ -170,10 +185,11 @@ def main(argv: list[str] | None = None) -> int:
                     action=p.action,
                     target=p.ad_id,
                     reasoning=p.reason,
-                    brand=args.brand,
+                    client=client_slug,
                     inputs={"current_daily_budget": p.current_daily_budget, "proposed_daily_budget": p.proposed_daily_budget},
                     requires_approval=p.requires_approval,
-                )
+                ),
+                path=log_path,
             )
     total = sum(p.proposed_daily_budget for p in proposals)
     print(f"# proposed total daily budget {cfg.currency}{total:.2f} / cap {cfg.currency}{cfg.daily_cap:.2f}", file=sys.stderr)

@@ -6,6 +6,8 @@ __pycache__/
 .env
 .env.*
 logs/*.jsonl
-config/budgets.json
-config/brands.json
-data/
+
+# Client data never enters the repo: exports, reports and decision logs stay local.
+clients/*/data/
+clients/*/reports/
+clients/*/logs/

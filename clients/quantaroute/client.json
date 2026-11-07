@@ -1,0 +1,27 @@
+{
+  "slug": "quantaroute",
+  "name": "QuantaRoute",
+  "website": "https://quantaroute.co.uk",
+  "industry": "Logistics software",
+  "country": "GB",
+  "currency": "GBP",
+  "stage": "pre-traction",
+  "audience": "UK couriers and small delivery operators",
+  "core_promise": "Turn delivery stops into a driver-ready optimised route",
+  "proof_points": [],
+  "competitors": [],
+  "compliance_notes": [],
+  "contact": {
+    "name": "",
+    "email": ""
+  },
+  "branding": {
+    "primary_color": "#0f766e",
+    "logo": null
+  },
+  "engagement": {
+    "relationship": "own-product",
+    "offer": "internal",
+    "status": "paused"
+  }
+}

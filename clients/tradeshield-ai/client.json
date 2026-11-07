@@ -1,0 +1,29 @@
+{
+  "slug": "tradeshield-ai",
+  "name": "TradeShield AI",
+  "website": "",
+  "industry": "Compliance software",
+  "country": "GB",
+  "currency": "GBP",
+  "stage": "private-beta",
+  "audience": "Teams screening high-risk commodity transactions",
+  "core_promise": "Commodity risk screening before a deal proceeds",
+  "proof_points": [],
+  "competitors": [],
+  "compliance_notes": [
+    "Regulated domain: no claims of guaranteed compliance or legal advice."
+  ],
+  "contact": {
+    "name": "",
+    "email": ""
+  },
+  "branding": {
+    "primary_color": "#7c2d12",
+    "logo": null
+  },
+  "engagement": {
+    "relationship": "own-product",
+    "offer": "internal",
+    "status": "paused"
+  }
+}
