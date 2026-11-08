@@ -52,15 +52,21 @@ Paste the form's link into `brand.json` → `booking_url`, then rebuild the site
 ### 3. Walkthrough booking (optional)
 A free Calendly link (one 15-minute event type) or a Google Calendar booking page. Paste the link into `brand.json` → `walkthrough_url`.
 
-### 4. Landing page hosting
-**Free temporary address (until the domain is bought):** Cloudflare Pages.
-1. Create a free Cloudflare account.
-2. **Workers & Pages → Create → Pages → Upload assets**.
-3. Project name: your working brand (this becomes `<name>.pages.dev`).
-4. Upload the `site/public` folder → **Deploy**.
-5. To update: run `python -m scripts.build_site`, then upload `site/public` again.
+### 4. Business email (Porkbun, free)
+Porkbun includes 20 free email forwards per domain.
+1. Porkbun → **Account → Domain Management** → `adwasteaudit.uk` → **Email Forwarding**.
+2. Add `hello` → forward to your Gmail → **Save**.
+3. Test: send an email to hello@adwasteaudit.uk from another account.
 
-When the domain is bought: **Custom domains → Set up a domain** in the same Pages project.
+To *send* as hello@ from Gmail later, you need a sending service (e.g. Gmail "Send mail as" with an SMTP provider, or paid email hosting). Receiving is enough to launch.
+
+### 5. Landing page hosting (Cloudflare Pages, free; DNS stays at Porkbun)
+1. Create a free Cloudflare account → **Workers & Pages → Create → Pages → Upload assets**.
+2. Project name: `adwasteaudit` → upload the `site/public` folder → **Deploy**. The site is now live at `adwasteaudit.pages.dev`.
+3. In the Pages project: **Custom domains → Set up a custom domain** → `www.adwasteaudit.uk`. Cloudflare shows a CNAME target.
+4. Porkbun → `adwasteaudit.uk` → **DNS** → add record: Type `CNAME`, Host `www`, Answer `adwasteaudit.pages.dev`. Remove any existing `www` record first.
+5. Porkbun → **URL Forwarding** → forward `adwasteaudit.uk` → `https://www.adwasteaudit.uk` (permanent, 301), so the bare domain works too.
+6. To update the site: run `python -m scripts.build_site`, then upload `site/public` again (Pages → **Create new deployment**).
 
 ---
 
