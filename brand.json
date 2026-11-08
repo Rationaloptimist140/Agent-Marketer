@@ -1,0 +1,14 @@
+{
+  "service_name": "AdWaste Audit",
+  "tagline": "Find the ad spend that isn't paying you back.",
+  "operator": "Crewlet",
+  "contact_email": "hello@example.com",
+  "price": "£99",
+  "min_monthly_spend": "£1,000",
+  "turnaround": "2 working days",
+  "booking_url": "#pricing",
+  "sample_report_url": "https://hyperagent.com/s/6SJq2B0TmD4E3PZZI4nfHA",
+  "walkthrough_url": "",
+  "primary_color": "#1b2b44",
+  "accent_color": "#2f6f4f"
+}

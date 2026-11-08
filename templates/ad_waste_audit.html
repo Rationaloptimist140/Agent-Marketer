@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ad Waste Audit — $client_name</title><style>
+<title>$service_name — $client_name</title><style>
 :root{--brand:$brand_color;--ink:#14171f;--muted:#5b6170;--line:#e4e6eb;--bg:#f6f7f9}
 *{box-sizing:border-box}body{margin:0;font:15px/1.55 -apple-system,'Segoe UI',Inter,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
 .page{max-width:920px;margin:0 auto;padding:40px 32px 64px;background:#fff}
@@ -29,7 +29,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
 @media print{body{background:#fff}.page{padding:0}.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}h2{break-after:avoid}tr{break-inside:avoid}}
 </style></head>
 <body><div class="page">
-<header><div><p class="eyebrow">Ad Waste Audit · $platform</p><h1>$client_name</h1></div>
+<header><div><p class="eyebrow">$service_name · $platform</p><h1>$client_name</h1></div>
 <div class="meta">$period<br>Prepared $generated_at</div></header>
 $demo_banner
 
@@ -64,5 +64,5 @@ $guarantee
 $notes
 </ul>
 
-<footer>Prepared by Agent Marketer · Crewlet. This audit is analysis of data you supplied and does not guarantee future results. No changes have been made to your ad accounts.</footer>
+<footer>Prepared by $service_name · $operator. This audit is analysis of data you supplied and does not guarantee future results. No changes have been made to your ad accounts.</footer>
 </div></body></html>

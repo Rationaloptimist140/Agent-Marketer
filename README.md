@@ -15,6 +15,10 @@ A done-for-you AI marketing service, run by Crewlet. Clients send their data; Ag
 | `scripts/ad_waste_audit.py` | **Lead offer:** turns a Meta or Google Ads export into a branded, client-ready Ad Waste Audit (HTML + JSON) |
 | `scripts/importers.py` | Reads Meta Ads Manager, Google Ads and generic CSV exports into one shape |
 | `templates/ad_waste_audit.html` | Report design; edit freely without touching code |
+| `scripts/intake.py` | One command from a booking-form submission to a ready-to-send report and drafted email |
+| `brand.json` | Public name, price, links and colours: change here, everything follows |
+| `site/` | Landing page template; `python -m scripts.build_site` writes `site/public/index.html` |
+| `DELIVERY.md` | Client journey, one-time setup (Stripe, Tally, hosting), copy to paste, per-client checklist |
 | `examples/` | Fictional demo export and the demo report it produces, for sales conversations |
 | `scripts/paid_media_rules.py` | Pillar 1: proposes PAUSE / SCALE / HOLD per ad, with hard daily caps enforced in code |
 | `scripts/seo_opportunities.py` | Pillar 2: ranks "shown but not clicked" Search Console queries into NEW_GUIDE / IMPROVE_PAGE |
