@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AdLeak Audit — independent audit of your Meta and Google Ads spend</title>
+<meta name="description" content="A fixed-price £99 audit that shows which of your Meta or Google ads are wasting money, what to pause and where to move the budget. No account access needed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#16202e;--body:#3a4555;--muted:#667085;--line:#e3e6eb;--paper:#ffffff;--wash:#f6f7f9;--brand:#1b2b44;--accent:#2f6f4f}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--body);font:17px/1.6 'IBM Plex Sans',-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+a{color:var(--brand)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+h1,h2,h3{color:var(--ink);line-height:1.2;margin:0}
+h1{font-family:'IBM Plex Serif',Georgia,serif;font-weight:600;font-size:clamp(2rem,4.4vw,3.05rem);letter-spacing:-.01em}
+h2{font-family:'IBM Plex Serif',Georgia,serif;font-weight:600;font-size:clamp(1.5rem,2.6vw,2rem);margin-bottom:12px}
+h3{font-size:1.05rem;font-weight:600;margin-bottom:6px}
+p{margin:0 0 14px}
+.eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.lede{font-size:1.15rem;color:var(--body);max-width:640px}
+section{padding:72px 0;border-top:1px solid var(--line)}
+section.wash{background:var(--wash)}
+
+/* header */
+.top{border-bottom:1px solid var(--line);background:var(--paper)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.mark{font-weight:600;color:var(--ink);text-decoration:none;font-size:1.05rem;letter-spacing:-.005em}
+.mark span{color:var(--muted);font-weight:400}
+.top nav a{color:var(--body);text-decoration:none;font-size:.95rem;margin-left:24px}
+.top nav a.btn{margin-left:28px;color:#fff;padding:10px 18px;font-size:.95rem}
+
+/* buttons */
+.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;font-weight:600;font-size:1rem;padding:13px 22px;border-radius:6px;border:1px solid var(--brand)}
+.btn:hover{background:#0f1a2b}
+.btn.ghost{background:transparent;color:var(--brand)}
+.btn.ghost:hover{background:var(--wash)}
+.btn:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #9cb3d6;outline-offset:2px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+
+/* hero */
+.hero{padding:72px 0 64px;border-top:0}
+.hero .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.assure{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:8px;font-size:.95rem}
+.assure li{padding-left:26px;position:relative}
+.assure li::before{content:"";position:absolute;left:0;top:.55em;width:12px;height:7px;border-left:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(-45deg)}
+
+/* sample card */
+.sample{border:1px solid var(--line);border-radius:10px;background:var(--paper);box-shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.06);overflow:hidden}
+.sample .head{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.sample .fig{padding:20px 18px 8px}
+.sample .fig small{display:block;font-size:.85rem;color:var(--muted)}
+.sample .fig strong{display:block;font-family:'IBM Plex Serif',Georgia,serif;font-size:2.6rem;color:var(--ink);line-height:1.1;margin:4px 0}
+.sample .fig p{font-size:.9rem;margin:0}
+.sample table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:10px}
+.sample td{padding:9px 18px;border-top:1px solid var(--line)}
+.sample td.r{text-align:right;white-space:nowrap}
+.tag{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:4px}
+.tag.pause{background:#fbeaea;color:#8f1d1d}.tag.scale{background:#e6f2ec;color:#1f5c40}.tag.keep{background:#eef0f3;color:#3a4555}
+.sample .foot{padding:12px 18px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted);background:var(--wash)}
+
+/* grids */
+.cols{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 40px;margin-top:32px}
+.cols p{font-size:.98rem;margin:0}
+.steps{list-style:none;counter-reset:s;padding:0;margin:36px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.steps li{counter-increment:s;border-top:2px solid var(--ink);padding-top:16px}
+.steps li::before{content:"Step " counter(s);display:block;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.steps p{font-size:.95rem;margin:0}
+
+/* export guide */
+details{border:1px solid var(--line);border-radius:8px;background:var(--paper);margin-top:12px}
+summary{cursor:pointer;padding:16px 20px;font-weight:600;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:400;font-size:1.3rem;color:var(--muted)}
+details[open] summary::after{content:"–"}
+details .inner{padding:0 20px 18px}
+details ol{margin:0;padding-left:20px}
+details li{margin-bottom:6px;font-size:.97rem}
+.note{font-size:.9rem;color:var(--muted)}
+
+/* pricing */
+.price{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.card{border:1px solid var(--line);border-radius:10px;padding:32px;background:var(--paper)}
+.card .amount{font-family:'IBM Plex Serif',Georgia,serif;font-size:3rem;color:var(--ink);line-height:1}
+.card .amount span{font-family:'IBM Plex Sans',sans-serif;font-size:1rem;color:var(--muted);margin-left:6px}
+.card ul{padding-left:20px;margin:20px 0 24px}
+.card li{margin-bottom:6px;font-size:.97rem}
+.card .btn{width:100%;text-align:center}
+.guarantee{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin-top:20px}
+.guarantee h3{margin-bottom:4px}
+.fit{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:28px}
+.fit h3{font-size:.95rem}
+.fit ul{margin:0;padding-left:18px;font-size:.95rem}
+
+/* faq + footer */
+.faq>*{max-width:760px}
+.cta{text-align:center}
+.cta .lede{margin:0 auto}
+.cta .actions{justify-content:center}
+footer{border-top:1px solid var(--line);padding:36px 0 48px;font-size:.88rem;color:var(--muted)}
+footer .wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:32px}
+footer p{margin:0 0 8px}
+
+@media (max-width:860px){
+  .hero .grid,.price,.fit,footer .wrap{grid-template-columns:1fr}
+  .hero .grid{gap:40px}
+  .steps{grid-template-columns:1fr 1fr}
+  .top nav a:not(.btn){display:none}
+  section{padding:56px 0}
+}
+@media (max-width:520px){
+  body{font-size:16px}
+  .cols,.steps{grid-template-columns:1fr}
+  .actions .btn{width:100%;text-align:center}
+  .card{padding:24px}
+}
+@media print{.top nav,.actions,.cta{display:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#">AdLeak Audit <span>by Crewlet</span></a>
+    <nav aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#export">Export guide</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="#pricing">Book an audit</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <p class="eyebrow">Independent audit · Meta and Google Ads</p>
+      <h1>Find the ad spend that isn&#x27;t paying you back.</h1>
+      <p class="lede" style="margin-top:20px">Send us a spreadsheet export from your ads account. Within 2 working days you receive a clear report showing which ads are wasting money, what to pause, and where to move the budget.</p>
+      <div class="actions">
+        <a class="btn" href="#pricing">Book your audit — £99</a>
+        <a class="btn ghost" href="https://hyperagent.com/s/6SJq2B0TmD4E3PZZI4nfHA" target="_blank" rel="noopener noreferrer">See a sample report</a>
+      </div>
+      <ul class="assure">
+        <li>No access to your ads account needed</li>
+        <li>Full refund if we find less than £99 of avoidable spend</li>
+        <li>Your data is deleted once the report is delivered</li>
+      </ul>
+    </div>
+
+    <figure class="sample" aria-label="Extract from a sample report">
+      <div class="head"><span>Sample report</span><span>Fictional data</span></div>
+      <div class="fig">
+        <small>Avoidable spend found, last 30 days</small>
+        <strong>£997</strong>
+        <p>38% of £2,645 went to ads with no conversions or a cost per conversion far above target.</p>
+      </div>
+      <table>
+        <tr><td>Free grinder giveaway</td><td class="r">£419</td><td class="r"><span class="tag pause">Pause</span></td></tr>
+        <tr><td>Brand story video</td><td class="r">£297</td><td class="r"><span class="tag pause">Pause or fix</span></td></tr>
+        <tr><td>Subscription offer</td><td class="r">£452</td><td class="r"><span class="tag scale">Scale</span></td></tr>
+        <tr><td>Roast date on every bag</td><td class="r">£371</td><td class="r"><span class="tag keep">Keep</span></td></tr>
+      </table>
+      <div class="foot">Every ad ranked, with the reasoning and an approval checklist.</div>
+    </figure>
+  </div>
+</section>
+
+<section class="wash">
+  <div class="wrap">
+    <p class="eyebrow">What you receive</p>
+    <h2>A report you can act on in ten minutes</h2>
+    <div class="cols">
+      <div><h3>How much was avoidable</h3><p>The spend that went to ads with no conversions, or that cost far more per conversion than your target. One clear figure, with the calculation shown.</p></div>
+      <div><h3>Exactly what to pause</h3><p>Every ad ranked by how much it wasted, so you know where to start.</p></div>
+      <div><h3>Where to move the budget</h3><p>The ads already converting below your target, with safe limits for increasing their spend.</p></div>
+      <div><h3>What to test next</h3><p>Which creatives people are scrolling past, and which winning ads to build new variations from.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2>Four steps, about five minutes of your time</h2>
+    <ol class="steps">
+      <li><h3>Export</h3><p>Download the last 30 days from Meta Ads Manager or Google Ads as a CSV file. The guide below shows exactly where to click.</p></li>
+      <li><h3>Upload</h3><p>Upload the file in our short booking form and tell us the most you'd happily pay for one sale or lead.</p></li>
+      <li><h3>Pay</h3><p>Pay £99 securely by card at the end of the form. You'll get an emailed receipt.</p></li>
+      <li><h3>Receive</h3><p>Your report arrives by email within 2 working days, with an optional 15-minute walkthrough call.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="export" class="wash">
+  <div class="wrap faq">
+    <p class="eyebrow">Export guide</p>
+    <h2>How to export your data</h2>
+    <p>We only need a spreadsheet. Never send us your password, and you don't need to give us access to your account.</p>
+    <details>
+      <summary>Meta (Facebook and Instagram) — Ads Manager</summary>
+      <div class="inner"><ol>
+        <li>Open <strong>Ads Manager</strong> at adsmanager.facebook.com.</li>
+        <li>Click the <strong>Ads</strong> tab (not Campaigns or Ad sets).</li>
+        <li>Set the date range, top right, to <strong>Last 30 days</strong>.</li>
+        <li>Check these columns are showing: <strong>Amount spent, Impressions, Link clicks, Results</strong>.</li>
+        <li>Click <strong>Reports</strong> (or the export icon) → <strong>Export table data</strong> → <strong>.csv</strong>.</li>
+      </ol></div>
+    </details>
+    <details>
+      <summary>Google Ads</summary>
+      <div class="inner"><ol>
+        <li>Open <strong>Google Ads</strong> at ads.google.com.</li>
+        <li>In the left menu, go to <strong>Campaigns → Ads</strong>.</li>
+        <li>Set the date range, top right, to <strong>Last 30 days</strong>.</li>
+        <li>Check these columns are showing: <strong>Cost, Impr., Clicks, Conversions</strong>.</li>
+        <li>Click the <strong>download icon</strong> above the table and choose <strong>.csv</strong>.</li>
+      </ol></div>
+    </details>
+    <p class="note" style="margin-top:16px">Menu names vary slightly between accounts. If you get stuck, email us a screenshot and we'll point you to it.</p>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap price">
+    <div>
+      <p class="eyebrow">Price</p>
+      <h2>One fixed price. No subscription.</h2>
+      <p>For businesses spending £1,000 or more a month on Meta or Google Ads. At that level, finding even a tenth of one month's spend covers the cost of the report.</p>
+      <div class="guarantee">
+        <h3>Our guarantee</h3>
+        <p>If we don't find at least £99 of avoidable spend, we refund you in full. No forms, no argument.</p>
+      </div>
+      <div class="fit">
+        <div><h3>A good fit if you</h3><ul><li>Spend £1,000+ a month on ads</li><li>Track sales or leads as conversions</li><li>Want a second opinion without a retainer</li></ul></div>
+        <div><h3>Not the right fit if you</h3><ul><li>Spend less than £1,000 a month</li><li>Don't track conversions yet</li><li>Want someone to run your ads day to day</li></ul></div>
+      </div>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Ad spend audit</p>
+      <div class="amount">£99<span>one-off</span></div>
+      <ul>
+        <li>Full review of the last 30 days, ad by ad</li>
+        <li>Avoidable spend figure, with the calculation shown</li>
+        <li>Ranked pause list and budget moves</li>
+        <li>Creative refresh and testing priorities</li>
+        <li>Optional 15-minute walkthrough call</li>
+        <li>Delivered within 2 working days</li>
+      </ul>
+      <a class="btn" href="#pricing">Book your audit</a>
+      <p class="note" style="margin:14px 0 0"><strong>Founding clients:</strong> our first 10 clients also receive a free re-audit after 30 days, in return for honest feedback.</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="wash">
+  <div class="wrap faq">
+    <p class="eyebrow">Questions</p>
+    <h2>Frequently asked</h2>
+    <details><summary>Do you need access to my ads account?</summary><div class="inner"><p>No. A spreadsheet export is all we need. We never ask for passwords or account access, and we make no changes to your account.</p></div></details>
+    <details><summary>What counts as "avoidable spend"?</summary><div class="inner"><p>Spend on ads that produced no conversions, plus, for ads costing more than 1.5 times your target cost per conversion, the spend above what their conversions were worth at your target. The report shows the calculation for every ad.</p></div></details>
+    <details><summary>What happens to my data?</summary><div class="inner"><p>It is used only to prepare your report and is deleted once the report is delivered. Founding clients' data is kept until the 30-day re-audit unless they ask us to delete it sooner. We never share it.</p></div></details>
+    <details><summary>What if my account is already well run?</summary><div class="inner"><p>Then you have independent confirmation. If we find less than £99 of avoidable spend, you get a full refund.</p></div></details>
+    <details><summary>Is this a guarantee of future results?</summary><div class="inner"><p>No. It is an analysis of your past performance with clear recommendations. What happens after you act depends on your market, offer and creative.</p></div></details>
+    <details><summary>Who is behind this?</summary><div class="inner"><p>AdLeak Audit is a service from Crewlet, a UK business building automation for small companies. Questions before booking: <a href="mailto:hello@example.com">hello@example.com</a>.</p></div></details>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Find out where your ad budget is leaking</h2>
+    <p class="lede">Fixed price, delivered within 2 working days, refunded if we find less than £99 of avoidable spend.</p>
+    <div class="actions">
+      <a class="btn" href="#pricing">Book your audit — £99</a>
+      <a class="btn ghost" href="https://hyperagent.com/s/6SJq2B0TmD4E3PZZI4nfHA" target="_blank" rel="noopener noreferrer">See a sample report</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <p><strong style="color:var(--ink)">AdLeak Audit</strong> by Crewlet</p>
+      <p>Contact: <a href="mailto:hello@example.com">hello@example.com</a></p>
+    </div>
+    <div>
+      <p>Payments are processed securely by Stripe. Files are collected through our booking form provider and deleted after delivery.</p>
+      <p>Analysis and recommendations only. We make no changes to your ad accounts and do not guarantee future performance.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

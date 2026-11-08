@@ -19,7 +19,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from string import Template
 
-from scripts import clients, decision_log, importers
+from scripts import brand, clients, decision_log, importers
 from scripts.paid_media_rules import BudgetConfig
 
 LOW_CTR = 0.007  # below 0.7% click-through on an ad that has had real delivery
@@ -262,7 +262,10 @@ def render_html(audit: Audit, client: clients.Client) -> str:
         for a in scale
     )
     notes = "".join(f"<li>{e(n)}</li>" for n in audit.notes)
+    b = brand.load()
     values = {
+        "service_name": e(b.service_name),
+        "operator": e(b.operator),
         "client_name": e(audit.client_name),
         "brand_color": client.primary_color,
         "platform": e(platform),
